@@ -42,7 +42,10 @@ tooling:
       # Install Drupal under the uw_profile.
       - appserver: drush -y site-install standard regional_settings.site_default_country="US" --account-mail='drupal@drupal.org' --site-name='Drupal 9' --site-mail='drupal@drupal.org'
       - appserver: drush theme:enable gin -y
-      - appserver: drush config-set system.theme admin gin
+      - appserver: drush config-set system.theme admin gin -y
+      - appserver: drush en gin_toolbar gin_lb -y
+      - appserver: drush en devel
+      - appserver: drush config-set devel.settings devel_dumper kint -y
       # Install and setup the theme. TODO move to profile / config_split
 #      - appserver: drush en -y views_ui twig_tweak
 #      - appserver: drush theme:enable un2_theme -y

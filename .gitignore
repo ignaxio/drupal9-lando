@@ -3,8 +3,8 @@
 # earlier versions of Drupal are tracked in `community/PHP/`
 
 # Ignore configuration files that may contain sensitive information
-/web/sites/*/settings.local.php
-/web/sites/*/*services*.yml
+# /web/sites/*/settings.local.php
+# /web/sites/*/*services*.yml
 
 # Ignore paths that may contain user-generated content
 /web/sites/*/files
@@ -73,7 +73,7 @@ composer.lock
 /web/sites/README.txt
 /web/sites/default/default.services.yml
 /web/sites/default/default.settings.php
-/web/sites/development.services.yml
+# /web/sites/development.services.yml
 /web/sites/example.sites.php
 /web/themes/README.txt
 # to discuss phpunit file
