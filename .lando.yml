@@ -42,12 +42,17 @@ tooling:
       # Install Drupal under the uw_profile.
       - appserver: drush -y site-install standard regional_settings.site_default_country="US" --account-mail='drupal@drupal.org' --site-name='Drupal 9' --site-mail='drupal@drupal.org'
       
+      - appserver: drush theme:enable olivero -y
+      - appserver: drush config-set system.theme default olivero -y
+      
       - appserver: drush theme:enable gin -y
       - appserver: drush config-set system.theme admin gin -y
       - appserver: drush en gin_toolbar gin_lb admin_toolbar -y
       - appserver: drush config-set gin.settings enable_darkmode 1 -y
       - appserver: drush config-set gin.settings high_contrast_mode 1 -y
       - appserver: drush config-set gin.settings classic_toolbar classic -y
+      
+      - appserver: drush en media media_library -y
       
       - appserver: drush en devel -y
       - appserver: drush config-set devel.settings devel_dumper kint -y
