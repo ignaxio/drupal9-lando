@@ -41,35 +41,18 @@ tooling:
       - appserver: composer install
       # Install Drupal under the uw_profile.
       - appserver: drush -y site-install standard regional_settings.site_default_country="US" --account-mail='drupal@drupal.org' --site-name='Drupal 9' --site-mail='drupal@drupal.org'
+      
       - appserver: drush theme:enable gin -y
       - appserver: drush config-set system.theme admin gin -y
-      - appserver: drush en gin_toolbar gin_lb -y
+      - appserver: drush en gin_toolbar gin_lb admin_toolbar -y
+      - appserver: drush config-set gin.settings enable_darkmode 1 -y
+      - appserver: drush config-set gin.settings high_contrast_mode 1 -y
+      - appserver: drush config-set gin.settings classic_toolbar classic -y
+      
       - appserver: drush en devel -y
       - appserver: drush config-set devel.settings devel_dumper kint -y
-      # Install and setup the theme. TODO move to profile / config_split
-#      - appserver: drush en -y views_ui twig_tweak
-#      - appserver: drush theme:enable un2_theme -y
-#      - appserver: drush config-set system.theme default un2_theme -y
-      # Enable module uw_content to provide default Search pages & other stuff
-#      - appserver: drush en -y uw_content
-      # Completely wipe solr index and index again.
-#      - appserver: "curl \"http://search:8983/solr/drupal/update?commit=true\" -H \"Content-Type: text/xml\" --data-binary '<delete><query>*:*</query></delete>'"
-#      - appserver: drush search-api:index
-#      # Install config_profile to help maintaining configuration on profile.
-#      - appserver: drush en config_profile -y
-#      - appserver: drush cset config_profile.settings profile uw_profile -y
-#      # Compile scss
-#      - node: "cd /app/web/themes/contrib/un2_theme && npm install && gulp styles stylesrtl js"
       - appserver: drush cr
-      # TODO add drush config to provide well formed url on running `drush uli`
-      - appserver: drush uli
-  locale-update:
-    service: appserver
-    description: Check and updates the translations for all languages
-    cmd:
-      # Update the translations.
-      - drush locale-check
-      - drush locale-update
+      - appserver: drush uli  
   npm:
     service: node
   gulp:
