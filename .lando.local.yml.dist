@@ -1,0 +1,17 @@
+# To customize the local environment copy this file as .lando.local.yml
+# and feel free to change it according to your needs (it is gitignored).
+# After doing any change ensure you rebuild your environment running `lando rebuild`
+config:
+  xdebug: true
+  # The following php.ini is to fix Xdebug integration. This will be fixed in upcoming lando releases so no extra
+  # php.ini file will be needed.
+  # See https://github.com/lando/lando/issues/1668#issuecomment-772829423
+  # See https://github.com/lando/lando/issues/2718
+  config:
+    php: .lando/php.ini
+services:
+  appserver:
+    overrides:
+      environment:
+        XDEBUG_MODE:
+        PHP_IDE_CONFIG: "serverName=drupal9.lndo.site"

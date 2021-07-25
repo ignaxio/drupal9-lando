@@ -1,0 +1,78 @@
+name: drupal9
+recipe: drupal9
+config:
+  php: 7.4
+  database: mariadb
+  webroot: web
+  xdebug: off
+
+# Get nice URLs for solr service.
+proxy:
+  search:
+    - search.uniteweb2.lndo.site:8983
+
+services:
+  appserver:
+    build:
+      - composer install
+  # Spin up a Solr container called "search".
+  # Set "search" instead of "localhost"
+  # on the Drupal search api solr server configuration.
+  search:
+    # Use a specific Solr version.
+    type: solr:8
+    # Optionally declare the name of the Solr core.
+    # This setting is only applicable for versions 5.5 and above.
+    core: drupal
+    portforward: true
+    # This should be the directory containing the schema.xml and solrconfig.xml files.
+    # Download the config.zip and extract it.
+    config:
+      dir: solr/conf
+  # Node container for frontend operations.
+  node:
+    type: node
+    globals:
+      gulp-cli: latest
+tooling:
+  reload-local:
+    description: Reload your local environment doing a fresh install for testing or development
+    cmd:
+      - appserver: composer install
+      # Install Drupal under the uw_profile.
+      - appserver: drush -y site-install standard regional_settings.site_default_country="US" --account-mail='drupal@drupal.org' --site-name='Drupal 9' --site-mail='drupal@drupal.org'
+      - appserver: drush theme:enable gin -y
+      - appserver: drush config-set system.theme admin gin
+      # Install and setup the theme. TODO move to profile / config_split
+#      - appserver: drush en -y views_ui twig_tweak
+#      - appserver: drush theme:enable un2_theme -y
+#      - appserver: drush config-set system.theme default un2_theme -y
+      # Enable module uw_content to provide default Search pages & other stuff
+#      - appserver: drush en -y uw_content
+      # Completely wipe solr index and index again.
+#      - appserver: "curl \"http://search:8983/solr/drupal/update?commit=true\" -H \"Content-Type: text/xml\" --data-binary '<delete><query>*:*</query></delete>'"
+#      - appserver: drush search-api:index
+#      # Install config_profile to help maintaining configuration on profile.
+#      - appserver: drush en config_profile -y
+#      - appserver: drush cset config_profile.settings profile uw_profile -y
+#      # Compile scss
+#      - node: "cd /app/web/themes/contrib/un2_theme && npm install && gulp styles stylesrtl js"
+      - appserver: drush cr
+      # TODO add drush config to provide well formed url on running `drush uli`
+      - appserver: drush uli
+  locale-update:
+    service: appserver
+    description: Check and updates the translations for all languages
+    cmd:
+      # Update the translations.
+      - drush locale-check
+      - drush locale-update
+  npm:
+    service: node
+  gulp:
+    service: node
+  phpcs:
+    service: appserver
+    description: Run code sniffer to check if code respect codding standard and Drupal best practices.
+    cmd:
+      - ./vendor/bin/phpcs

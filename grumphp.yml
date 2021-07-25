@@ -1,0 +1,24 @@
+parameters:
+  git_hook_variables:
+    EXEC_GRUMPHP_COMMAND: 'lando php'
+  extensions:
+    - GrumphpDrupalCheck\ExtensionLoader
+# Uncomment the following lines to
+#  ascii:
+#    failed: vendor/vijaycs85/drupal-quality-checker/resources/ascii/grumpy.txt
+#    succeeded: vendor/vijaycs85/drupal-quality-checker/resources/ascii/happy.txt
+  bin_dir: vendor/bin
+  tasks:
+    git_commit_message:
+      max_subject_width: 130
+      case_insensitive: false
+      matchers:
+        Must contain JIRA issue number: /UW2-\d+ - .+/
+    phplint: ~
+    yamllint: ~
+    composer: ~
+    jsonlint: ~
+    drupalcheck: ~
+    phpcpd: ~
+    phpcs: ~
+    phpmd: ~
