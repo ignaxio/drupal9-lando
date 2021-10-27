@@ -92,5 +92,5 @@ composer.lock
 
 # Ensure .gitkeep files are commited.
 !.gitkeep
-/config/sync
+# /config/sync
 /nbproject/private/

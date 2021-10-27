@@ -20,14 +20,16 @@
     "drupal/core-composer-scaffold": "^9",
     "drupal/core-recommended": "^9",
     "drupal/devel": "^4.1",
+    "drupal/field_gallery": "^2.0@RC",
     "drupal/gin": "^3.0",
     "drupal/gin_lb": "^1.0@beta",
     "drupal/gin_toolbar": "^1.0@beta",
-    "drush/drush": "^10",
-    "kint-php/kint": "^3.3"
+    "drupal/splidebox": "1.0.x-dev"
   },
   "require-dev": {
-    "drupal/coder": "^8.3"
+    "drupal/coder": "^8.3",
+    "drush/drush": "^10",
+    "kint-php/kint": "^3.3"
   },
   "conflict": {
     "drupal/drupal": "*"

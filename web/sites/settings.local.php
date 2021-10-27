@@ -154,3 +154,5 @@ $settings['skip_permissions_hardening'] = TRUE;
  */
 # $settings['config_exclude_modules'] = ['devel', 'stage_file_proxy'];
 $settings['twig_debug'] = TRUE;
+
+$settings['config_sync_directory'] = '../config/sync';

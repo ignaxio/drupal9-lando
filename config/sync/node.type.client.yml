@@ -1,0 +1,18 @@
+uuid: 8fb60011-ad66-4018-898c-b55a6f5fb99c
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Client
+type: client
+description: 'Entity type to management the clients'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

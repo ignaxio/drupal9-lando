@@ -1,0 +1,32 @@
+uuid: 2aa9df6c-2614-4561-9cbf-316731fcada6
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.client.body
+    - field.field.node.client.field_client_logo
+    - node.type.client
+  module:
+    - text
+    - user
+id: node.client.teaser
+targetEntityType: node
+bundle: client
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_client_logo: true
